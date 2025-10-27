@@ -38,5 +38,47 @@
 }
 
 .read-the-docs {
-  color: #888;
+  color: #888888;
+
+  .inventario-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .titulo-inventario {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .tabla-inventario {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+  }
+  
+  .tabla-inventario th,
+  .tabla-inventario td {
+    border: 1px solid #aaa;
+    padding: 10px;
+  }
+  
+  .tabla-inventario th {
+    background-color: #f0f0f0;
+  }
+  
+  .sin-productos {
+    text-align: center;
+    padding: 20px;
+  }
+
+  .main-content {
+    margin-left: 240px; 
+    padding: 20px;
+    max-width: 1200px;
+    margin-right: auto;
+  }
+  
 }
