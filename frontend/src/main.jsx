@@ -16,7 +16,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           
           <App />
         </VentasProvider>
-      </ProductosProvider>
+      </ProductosProvider> 
     </AuthProvider>
   </React.StrictMode>
 );
