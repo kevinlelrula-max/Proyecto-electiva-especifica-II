@@ -5,12 +5,9 @@ const path = require("path");
 const { Pool } = require("pg");
 
 const authRoutes = require("./routes/authRoutes");
-//const productosRoutes = require("./routes/productosRoutes");
-//const ventasRoutes = require("./routes/ventasRoutes");
-//const ubicacionRoute = require("./routes/ubicacionRoute");
-//const metodosPagoRoutes = require("./routes/metodosPago"); // ✅ solo una vez
+const productosRoutes = require("./routes/productosRoutes");
 const personasRoutes = require('./routes/personaRoutes');
-//const categoriasRoutes = require('./routes/categoriaRoutes'); 
+
 const clienteRoutes = require('./routes/clienteRoutes');
 
 dotenv.config();
@@ -34,11 +31,8 @@ pool.connect()
 
 // Rutas
 app.use("/api/auth", authRoutes);
-//app.use("/api/productos", productosRoutes);
-//app.use("/api/ventas", ventasRoutes);
-//app.use("/api/ubicacion", ubicacionRoute);
-//app.use("/api/metodos-pago", metodosPagoRoutes); 
-//app.use("/api/categorias", categoriasRoutes);
+app.use("/api/productos", productosRoutes);
+
 app.use("/api/personas", personasRoutes);
 app.use("/api/clientes", clienteRoutes);
 
