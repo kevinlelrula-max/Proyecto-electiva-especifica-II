@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { VentasContext } from "../context/VentasContext.jsx";
-
+ 
 const HistorialVentas = () => {
   const { ventas } = useContext(VentasContext);
 

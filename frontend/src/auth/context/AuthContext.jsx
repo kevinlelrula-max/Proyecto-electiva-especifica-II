@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
 
-
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -8,9 +7,34 @@ export const AuthProvider = ({ children }) => {
   const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
-    const usuarioGuardado = JSON.parse(localStorage.getItem("usuarioActivo"));
-    if (usuarioGuardado) setUsuario(usuarioGuardado);
-    setCargando(false);
+    try {
+      const usuarioGuardado = localStorage.getItem("usuarioActivo");
+      if (!usuarioGuardado) {
+        setCargando(false);
+        return;
+      }
+
+      const parsed = JSON.parse(usuarioGuardado);
+
+      // Validación básica de estructura esperada
+      if (
+        !parsed ||
+        typeof parsed !== "object" ||
+        !parsed.email ||
+        !parsed.rol
+      ) {
+        localStorage.removeItem("usuarioActivo");
+        setUsuario(null);
+      } else {
+        setUsuario(parsed);
+      }
+    } catch (error) {
+      console.warn("Error al leer usuarioActivo. Se limpia.");
+      localStorage.removeItem("usuarioActivo");
+      setUsuario(null);
+    } finally {
+      setCargando(false);
+    }
   }, []);
 
   const registrar = async (nuevoUsuario) => {
@@ -19,9 +43,8 @@ export const AuthProvider = ({ children }) => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: nuevoUsuario.email,
-          password: nuevoUsuario.password,
-          rol_id: 2, // Cliente por defecto
+          ...nuevoUsuario,
+          rol: "Cliente", // 👈 Cliente por defecto
         }),
       });
 
