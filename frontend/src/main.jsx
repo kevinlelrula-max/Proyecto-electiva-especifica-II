@@ -12,7 +12,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode> 
     <AuthProvider>
       <ProductosProvider>
-        <VentasProvider> {/* ✅ ahora sí se incluye */}
+        <VentasProvider> {/* ✅ ahora sí se incluye  */}
           
           <App />
         </VentasProvider>
