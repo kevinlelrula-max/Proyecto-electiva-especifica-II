@@ -1,7 +1,7 @@
 import { createContext, useReducer, useEffect } from "react";
 
 export const ProductosContext = createContext();
-
+ 
 // Reducer para manejar el estado de los productos
 const productosReducer = (state, action) => {
   switch (action.type) {

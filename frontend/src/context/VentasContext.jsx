@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-
+ 
 export const VentasContext = createContext();
 
 export const VentasProvider = ({ children }) => {

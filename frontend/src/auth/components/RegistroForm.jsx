@@ -3,7 +3,7 @@ import { useAuth } from "../../auth/context";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { validarRegistro } from "../helpers";
-
+ 
 const RegistroForm = () => {
   const { registrar } = useAuth();
   const navigate = useNavigate();
