@@ -9,8 +9,12 @@ const authRoutes = require("./routes/authRoutes");
 //const ventasRoutes = require("./routes/ventasRoutes");
 //const ubicacionRoute = require("./routes/ubicacionRoute");
 //const metodosPagoRoutes = require("./routes/metodosPago"); // ✅ solo una vez
+
 //const personasRoutes = require('./routes/personaRoutes');
-const categoriasRoutes = require('./routes/categoriaRoutes'); 
+//const categoriasRoutes = require('./routes/categoriaRoutes'); 
+
+const personasRoutes = require('./routes/personaRoutes');
+//const categoriasRoutes = require('./routes/categoriaRoutes'); 
 const clienteRoutes = require('./routes/clienteRoutes');
 
 dotenv.config();
