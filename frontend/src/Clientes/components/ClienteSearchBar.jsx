@@ -1,5 +1,6 @@
 import { FaSearch } from "react-icons/fa";
 
+
 export const ClienteSearchBar = ({ busqueda, setBusqueda }) => (
   <div className="mb-3">
     <div className="input-group">
