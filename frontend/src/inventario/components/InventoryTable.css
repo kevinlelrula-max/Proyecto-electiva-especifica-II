@@ -1,0 +1,8 @@
+.fila-producto:hover {
+  background-color: #f1f5f9;
+  transition: background-color 0.3s;
+}
+
+.table-body td {
+  vertical-align: middle;
+}

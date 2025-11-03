@@ -1,0 +1,48 @@
+.tabla-metodos {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background-color: #fff;
+}
+
+.tabla-metodos th {
+  background-color: #0d6efd;
+  color: white;
+  text-align: center;
+  padding: 12px;
+  font-weight: 600;
+}
+
+.tabla-metodos td {
+  padding: 10px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.tabla-metodos tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.tabla-metodos tr:hover {
+  background-color: #e2e6ea;
+}
+
+.btn-accion {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-editar {
+  background-color: #ffc107;
+  margin-right: 6px;
+}
+
+.btn-eliminar {
+  background-color: #dc3545;
+}
