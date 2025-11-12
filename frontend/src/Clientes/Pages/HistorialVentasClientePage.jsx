@@ -66,7 +66,7 @@ export const HistorialVentasClientePage = () => {
     <div
       className="container-fluid px-3 px-md-4"
       style={{
-        marginLeft: -120,     // ⬅️ lo acercamos al sidebar
+        marginLeft: -50,     // ⬅️ lo acercamos al sidebar
         paddingTop: 16,
         paddingBottom: 16,
       }}
