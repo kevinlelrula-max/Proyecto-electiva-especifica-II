@@ -22,15 +22,17 @@ export const PuntoDeVentaPage = () => {
   const agregarAlCarrito = () => {
     if (!productoSeleccionado || kilos <= 0) return;
 
-    const subtotal = parseFloat(productoSeleccionado.precio) * kilos;
+    const precioNum = parseFloat(productoSeleccionado.precio) || 0;
+    const kilosNum = parseFloat(kilos) || 0;
+    const subtotal = precioNum * kilosNum;
 
     setCarrito((prev) => [
       ...prev,
       {
         producto_id: productoSeleccionado.id,
         nombre: productoSeleccionado.nombre,
-        precio: productoSeleccionado.precio,
-        kilos,
+        precio: precioNum,
+        kilos: kilosNum,
         subtotal,
       },
     ]);
@@ -41,11 +43,17 @@ export const PuntoDeVentaPage = () => {
   };
 
   const eliminarDelCarrito = (index) => {
-    setCarrito(carrito.filter((_, i) => i !== index));
+    setCarrito((prev) => prev.filter((_, i) => i !== index));
   };
 
+  // ---- CÁLCULO CENTRALIZADO DE TOTALES ----
   const calcularTotal = () =>
-    carrito.reduce((acc, item) => acc + item.subtotal, 0);
+    carrito.reduce((acc, item) => acc + (Number(item.subtotal) || 0), 0);
+
+  const subtotal = calcularTotal();
+  const iva = subtotal * 0.19;
+  const total = subtotal + iva;
+  // -----------------------------------------
 
   const vaciarCarrito = () => setCarrito([]);
 
@@ -78,7 +86,10 @@ export const PuntoDeVentaPage = () => {
   };
 
   return (
-    <div className="container-fluid pt-4 px-4 px-lg-5 punto-venta-wrapper" style={{ marginLeft: "70px" }}>
+    <div
+      className="container-fluid pt-4 px-4 px-lg-5 punto-venta-wrapper"
+      style={{ marginLeft: "70px" }}
+    >
       {/* Encabezado tipo dashboard */}
       <div className="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-3">
         <div className="d-flex align-items-center gap-3">
@@ -90,7 +101,9 @@ export const PuntoDeVentaPage = () => {
           </div>
           <div>
             <h3 className="fw-bold mb-0">Punto de Venta</h3>
-            <small className="text-muted">Agrega productos, calcula totales y registra la venta</small>
+            <small className="text-muted">
+              Agrega productos, calcula totales y registra la venta
+            </small>
           </div>
         </div>
 
@@ -99,7 +112,7 @@ export const PuntoDeVentaPage = () => {
             Ítems:&nbsp;<strong>{carrito.length}</strong>
           </span>
           <span className="badge bg-success-subtle text-success border">
-            Total:&nbsp;<strong>${calcularTotal().toFixed(2)}</strong>
+            Total:&nbsp;<strong>${subtotal.toFixed(2)}</strong>
           </span>
         </div>
       </div>
@@ -131,7 +144,7 @@ export const PuntoDeVentaPage = () => {
             <div className="card-header bg-white border-0 d-flex align-items-center justify-content-between">
               <h5 className="mb-0">Carrito</h5>
               <span className="badge bg-dark-subtle text-dark border">
-                Total:&nbsp;<strong>${calcularTotal().toFixed(2)}</strong>
+                Total:&nbsp;<strong>${subtotal.toFixed(2)}</strong>
               </span>
             </div>
             <div className="card-body pt-0">
@@ -164,8 +177,9 @@ export const PuntoDeVentaPage = () => {
           <div className="card border-0 shadow-sm rounded-4">
             <div className="card-body">
               <TotalesVenta
-                carrito={carrito}
-                calcularTotal={calcularTotal}
+                subtotal={subtotal}
+                iva={iva}
+                total={total}
                 finalizarVenta={finalizarVenta}
                 vaciarCarrito={vaciarCarrito}
               />
