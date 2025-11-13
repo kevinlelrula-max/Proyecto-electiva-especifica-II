@@ -3,43 +3,26 @@ export function calcularTotalesVenta(carrito) {
     return { subtotal: "0.00", iva: "0.00", total: "0.00" };
   }
 
-  let subtotal = carrito.reduce((acum, item) => {
-      console.log("Item en carrito:", item); // <- aquí
+  let subtotal = 0;
 
-    if (!item) return acum;
+  carrito.forEach(item => {
+    // Convertir precio (viene como string)
+    let precio = String(item.precio || item.precio_unitario || "")
+      .replace(",", ".")          // si viene "16500,00"
+      .replace(/\s+/g, "");       // limpiar espacios
+    precio = parseFloat(precio) || 0;
 
-    // Intentamos obtener un precio
-    const precio =
-      Number(item.precio) ||
-      Number(item.precio_unitario) ||
-      Number(item.precioUnitario) ||
-      Number(item.PrecioUnitario) ||
-      0;
+    // Convertir kilos
+    let kilos = String(item.kilos || item.cantidad || item.cantidad_kg || "")
+      .replace(",", ".")
+      .replace(/\s+/g, "");
+    kilos = parseFloat(kilos) || 0;
 
-    // Intentamos obtener kilos / cantidad
-    const kilos =
-      Number(item.kilos) ||
-      Number(item.cantidad) ||
-      Number(item.cantidad_kg) ||
-      Number(item.cantidadKg) ||
-      Number(item.CantidadKg) ||
-      0;
+    // Si existe subtotal interno, úsalo
+    const sub = parseFloat(item.subtotal) || (precio * kilos);
 
-    // Si tengo precio y kilos, uso precio * kilos
-    if (precio > 0 && kilos > 0) {
-      return acum + precio * kilos;
-    }
-
-    // Si no, intento usar un subtotal ya calculado en el item
-    const subtotalItem =
-      Number(item.subtotal) ||
-      Number(item.total_parcial) ||
-      Number(item.totalParcial) ||
-      Number(item.TotalParcial) ||
-      0;
-
-    return acum + subtotalItem;
-  }, 0);
+    subtotal += sub;
+  });
 
   const iva = subtotal * 0.19;
   const total = subtotal + iva;
