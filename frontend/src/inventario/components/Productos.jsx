@@ -56,89 +56,136 @@ export const Productos = () => {
   };
 
   return (
-    <div className="container mt-1" style={{ marginLeft: "0px" }}>
-      <div className="card shadow p-4">
-        <h2 className="text-center mb-4">
-          <FaPlusCircle className="me-2 text-primary" />
-          Añadir Producto
-        </h2>
-
-        <form className="row g-3 w-75 mx-auto" onSubmit={handleSubmit}>
-          <div className="col-md-12">
-            <label className="form-label fw-bold">
-              <FaFish className="me-2" />
-              Nombre del producto:
-            </label>
-            <input
-              type="text"
-              name="nombre"
-              value={producto.nombre}
-              onChange={handleChange}
-              className="form-control"
-              placeholder="Ej: Dorado, Bagre..."
-              required
-            />
+    <div
+      className="container-fluid py-4"
+      style={{
+        minHeight: "100vh",
+        background: "#f4f6f9", // ✅ FONDO PROFESIONAL CLARO
+      }}
+    >
+      <div
+        className="card shadow-lg border-0 rounded-4 mx-auto"
+        style={{
+          maxWidth: "900px",
+          background: "rgba(255, 255, 255, 0.98)",
+        }}
+      >
+        {/* Encabezado */}
+        <div
+          className="card-header border-0 rounded-top-4"
+          style={{
+            background:
+              "linear-gradient(135deg, #0ea5e9 0%, #22c55e 50%, #0f766e 100%)",
+            color: "#ffffff",
+          }}
+        >
+          <div className="d-flex align-items-center justify-content-center gap-2">
+            <FaPlusCircle size={28} />
+            <h2 className="mb-0 fw-bold text-center">Añadir producto</h2>
           </div>
+          <p className="text-center mb-0 mt-2" style={{ fontSize: "0.9rem" }}>
+            Registra nuevos productos pesqueros con su stock, precio y categoría.
+          </p>
+        </div>
 
-          <div className="col-md-6">
-            <label className="form-label fw-bold">
-              <FaWeight className="me-2" />
-              Kilos en stock:
-            </label>
-            <input
-              type="number"
-              step="0.01"
-              name="kilos"
-              value={producto.kilos}
-              onChange={handleChange}
-              className="form-control"
-              placeholder="Ej: 10.5"
-              required
-            />
-          </div>
+        {/* Cuerpo */}
+        <div className="card-body p-4 p-md-5">
+          <form className="row g-4" onSubmit={handleSubmit}>
+            {/* Nombre */}
+            <div className="col-12">
+              <label className="form-label fw-semibold text-secondary">
+                <FaFish className="me-2 text-primary" />
+                Nombre del producto
+              </label>
+              <input
+                type="text"
+                name="nombre"
+                value={producto.nombre}
+                onChange={handleChange}
+                className="form-control form-control-lg shadow-sm"
+                placeholder="Ej: Dorado, Bagre..."
+                required
+              />
+            </div>
 
-          <div className="col-md-6">
-            <label className="form-label fw-bold">
-              <FaDollarSign className="me-2" />
-              Precio por kilo:
-            </label>
-            <input
-              type="number"
-              step="0.01"
-              name="precio"
-              value={producto.precio}
-              onChange={handleChange}
-              className="form-control"
-              placeholder="Ej: 1450"
-              required
-            />
-          </div>
+            {/* Kilos y Precio */}
+            <div className="col-md-6">
+              <label className="form-label fw-semibold text-secondary">
+                <FaWeight className="me-2 text-primary" />
+                Kilos en stock
+              </label>
+              <input
+                type="number"
+                step="0.01"
+                name="kilos"
+                value={producto.kilos}
+                onChange={handleChange}
+                className="form-control form-control-lg shadow-sm"
+                placeholder="Ej: 10.5"
+                required
+              />
+            </div>
 
-          <div className="col-md-12">
-            <label className="form-label fw-bold">Categoría:</label>
-            <select
-              name="categoria_id"
-              value={producto.categoria_id}
-              onChange={handleChange}
-              className="form-select"
-              required
-            >
-              <option value="">Seleccione una categoría</option>
-              {categorias.map((cat) => (
-                <option key={cat.id} value={cat.id}>
-                  {cat.nombre}
-                </option>
-              ))}
-            </select>
-          </div>
+            <div className="col-md-6">
+              <label className="form-label fw-semibold text-secondary">
+                <FaDollarSign className="me-2 text-success" />
+                Precio por kilo
+              </label>
+              <div className="input-group shadow-sm">
+                <span className="input-group-text fw-bold">$</span>
+                <input
+                  type="number"
+                  step="0.01"
+                  name="precio"
+                  value={producto.precio}
+                  onChange={handleChange}
+                  className="form-control form-control-lg"
+                  placeholder="Ej: 1450"
+                  required
+                />
+              </div>
+            </div>
 
-          <div className="col-12 d-grid">
-            <button type="submit" className="btn btn-success btn-lg">
-              <FaPlusCircle className="me-2" />
-              Agregar Producto
-            </button>
-          </div>
-        </form>
+            {/* Categoría */}
+            <div className="col-12">
+              <label className="form-label fw-semibold text-secondary">
+                Categoría
+              </label>
+              <select
+                name="categoria_id"
+                value={producto.categoria_id}
+                onChange={handleChange}
+                className="form-select form-select-lg shadow-sm"
+                required
+              >
+                <option value="">Seleccione una categoría</option>
+                {categorias.map((cat) => (
+                  <option key={cat.id} value={cat.id}>
+                    {cat.nombre}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Botón */}
+            <div className="col-12">
+              <button
+                type="submit"
+                className="btn btn-success btn-lg w-100 shadow-sm d-flex align-items-center justify-content-center gap-2"
+                style={{ borderRadius: "999px" }}
+              >
+                <FaPlusCircle />
+                <span className="fw-semibold">Agregar producto</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div className="card-footer bg-transparent border-0 text-center pb-4">
+          <small className="text-muted">
+            Asegúrate de que los datos sean correctos antes de guardar.
+          </small>
+        </div>
       </div>
     </div>
   );
