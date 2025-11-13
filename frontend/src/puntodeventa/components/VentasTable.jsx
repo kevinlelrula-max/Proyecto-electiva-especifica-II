@@ -6,7 +6,6 @@ export const VentasTable = ({ ventas }) => {
   const [orden, setOrden] = useState({ campo: null, asc: true });
   const [paginaActual, setPaginaActual] = useState(1);
   const [itemsPorPagina, setItemsPorPagina] = useState(10);
-  const [ventaSeleccionada, setVentaSeleccionada] = useState(null);
 
   const ordenar = (campo) => {
     const asc = orden.campo === campo ? !orden.asc : true;
@@ -95,7 +94,7 @@ export const VentasTable = ({ ventas }) => {
               <th onClick={() => ordenar("fecha")} style={{ cursor: "pointer" }}>
                 Fecha {iconoOrden("fecha")}
               </th>
-              <th>Opciones</th>
+              {/* Quitamos la columna "Opciones" */}
             </tr>
           </thead>
           <tbody>
@@ -104,27 +103,22 @@ export const VentasTable = ({ ventas }) => {
                 <td>{venta.id_venta}</td>
                 <td>{venta.cliente}</td>
                 <td>{venta.metodo_pago}</td>
-                <td className={venta.total > 5000 ? "text-success fw-bold" : "fw-bold"}>
+                <td
+                  className={
+                    venta.total > 5000 ? "text-success fw-bold" : "fw-bold"
+                  }
+                >
                   ${Number(venta.total).toFixed(2)}
                 </td>
                 <td>{formatearFecha(venta.fecha)}</td>
-                <td>
-                  <button
-                    className="btn btn-outline-info btn-sm"
-                    onClick={() => setVentaSeleccionada(venta)}
-                    data-bs-toggle="modal"
-                    data-bs-target="#modalDetalleVenta"
-                  >
-                    Ver Detalle
-                  </button>
-                </td>
+                {/* Quitamos la celda del botón "Ver Detalle" */}
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
-      {}
+      {/* Paginación */}
       <div className="d-flex justify-content-center align-items-center mt-2">
         <button
           className="btn btn-outline-secondary btn-sm me-2"
@@ -151,41 +145,6 @@ export const VentasTable = ({ ventas }) => {
         >
           Siguiente
         </button>
-      </div>
-
-      {}
-      <div className="modal fade" id="modalDetalleVenta" tabIndex="-1">
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            {ventaSeleccionada && (
-              <>
-                <div className="modal-header">
-                  <h5 className="modal-title">
-                  </h5>
-                  <button
-                    type="button"
-                    className="btn-close"
-                    data-bs-dismiss="modal"
-                  ></button>
-                </div>
-                <div className="modal-body">
-                  <p><strong>Cliente:</strong> {ventaSeleccionada.cliente}</p>
-                  <p><strong>Método de Pago:</strong> {ventaSeleccionada.metodo_pago}</p>
-                  <p><strong>Total:</strong> ${Number(ventaSeleccionada.total).toFixed(2)}</p>
-                  <p><strong>Fecha:</strong> {formatearFecha(ventaSeleccionada.fecha)}</p>
-                </div>
-                <div className="modal-footer">
-                  <button
-                    className="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                  >
-                    Cerrar
-                  </button>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
       </div>
     </div>
   );
