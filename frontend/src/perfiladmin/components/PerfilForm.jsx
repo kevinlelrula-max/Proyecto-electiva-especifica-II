@@ -6,7 +6,7 @@ export const PerfilForm = ({
   departamentos,
   municipios,
   handleGuardar,
-  usuario
+  usuario,
 }) => {
   return (
     <div className="container mt-5">
@@ -29,7 +29,7 @@ export const PerfilForm = ({
               type="text"
               className="form-control"
               name="tipo_documento"
-              value={datos.tipo_documento}
+              value={datos.tipo_documento || ""}
               onChange={handleChange}
               placeholder="Cédula de ciudadanía"
             />
@@ -43,7 +43,7 @@ export const PerfilForm = ({
               type="text"
               className="form-control"
               name="numero_documento"
-              value={datos.numero_documento}
+              value={datos.numero_documento || ""}
               onChange={handleChange}
             />
           </div>
@@ -53,7 +53,7 @@ export const PerfilForm = ({
               type="text"
               className="form-control"
               name="nombre"
-              value={datos.nombre}
+              value={datos.nombre || ""}
               onChange={handleChange}
             />
           </div>
@@ -66,7 +66,7 @@ export const PerfilForm = ({
               type="text"
               className="form-control"
               name="apellido"
-              value={datos.apellido}
+              value={datos.apellido || ""}
               onChange={handleChange}
             />
           </div>
@@ -76,7 +76,7 @@ export const PerfilForm = ({
               type="text"
               className="form-control"
               name="telefono"
-              value={datos.telefono}
+              value={datos.telefono || ""}
               onChange={handleChange}
             />
           </div>
@@ -88,7 +88,7 @@ export const PerfilForm = ({
             type="text"
             className="form-control"
             name="direccion"
-            value={datos.direccion}
+            value={datos.direccion || ""}
             onChange={handleChange}
           />
         </div>
@@ -99,7 +99,7 @@ export const PerfilForm = ({
             <select
               className="form-select"
               name="id_departamento"
-              value={datos.id_departamento}
+              value={datos.id_departamento || ""}
               onChange={handleChange}
             >
               <option value="">Seleccione un departamento</option>
@@ -115,13 +115,16 @@ export const PerfilForm = ({
             <select
               className="form-select"
               name="id_municipio"
-              value={datos.id_municipio}
+              value={datos.id_municipio || ""}
               onChange={handleChange}
               disabled={!datos.id_departamento}
             >
               <option value="">Seleccione un municipio</option>
               {municipios.map((mun) => (
-                <option key={mun.id} value={mun.id}>
+                <option
+                  key={mun.municipio_id || mun.id}
+                  value={mun.municipio_id || mun.id}
+                >
                   {mun.nombre}
                 </option>
               ))}
