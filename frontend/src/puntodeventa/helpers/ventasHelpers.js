@@ -4,8 +4,19 @@ export function calcularTotalesVenta(carrito) {
   }
 
   let subtotal = carrito.reduce((acum, item) => {
-    const precio = Number(item.precio) || 0;  
-    const kilos  = Number(item.kilos)  || 0;   
+    const precio =
+      Number(item.precio) ||
+      Number(item.precio_unitario) ||
+      Number(item.precioUnitario) ||
+      0;
+
+    const kilos =
+      Number(item.kilos) ||
+      Number(item.cantidad) ||
+      Number(item.cantidad_kg) ||
+      Number(item.cantidadKg) ||
+      0;
+
     return acum + precio * kilos;
   }, 0);
 
