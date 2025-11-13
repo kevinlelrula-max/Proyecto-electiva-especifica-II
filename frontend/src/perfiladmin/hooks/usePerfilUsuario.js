@@ -9,7 +9,7 @@ export const usePerfilUsuario = (usuario) => {
     tipo_documento: "Cédula de ciudadanía",
     numero_documento: "",
     id_municipio: "",
-    id_departamento: ""
+    id_departamento: "",
   });
 
   const [departamentos, setDepartamentos] = useState([]);
@@ -18,7 +18,9 @@ export const usePerfilUsuario = (usuario) => {
   useEffect(() => {
     const cargarDepartamentos = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/ubicacion/departamentos`);
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/ubicacion/departamentos`
+        );
         const data = await res.json();
         setDepartamentos(data);
       } catch (error) {
@@ -28,20 +30,36 @@ export const usePerfilUsuario = (usuario) => {
 
     const cargarPerfil = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/personas/${usuario.email}`);
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/personas/${usuario.email}`
+        );
         const data = await res.json();
-        setDatos(prev => ({ ...prev, ...data }));
+
+        // data.id_municipio e id_departamento deberían venir como NÚMEROS
+        setDatos((prev) => ({
+          ...prev,
+          ...data,
+        }));
 
         if (data.id_municipio) {
-          const depRes = await fetch(`${import.meta.env.VITE_API_URL}/api/ubicacion/municipio/${data.id_municipio}`);
+          // obtengo el departamento de ese municipio
+          const depRes = await fetch(
+            `${import.meta.env.VITE_API_URL}/api/ubicacion/municipio/${data.id_municipio}`
+          );
           const depData = await depRes.json();
           const id_departamento = depData.id_departamento;
 
-          const resMun = await fetch(`${import.meta.env.VITE_API_URL}/api/ubicacion/municipios/${id_departamento}`);
+          // cargo municipios de ese departamento
+          const resMun = await fetch(
+            `${import.meta.env.VITE_API_URL}/api/ubicacion/municipios/${id_departamento}`
+          );
           const munis = await resMun.json();
 
           setMunicipios(munis);
-          setDatos(prev => ({ ...prev, id_departamento }));
+          setDatos((prev) => ({
+            ...prev,
+            id_departamento, // 👈 guardo el ID, no el nombre
+          }));
         }
       } catch (error) {
         console.error("Error al cargar perfil:", error);
@@ -56,7 +74,9 @@ export const usePerfilUsuario = (usuario) => {
   useEffect(() => {
     const cargarMunicipios = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/ubicacion/municipios/${datos.id_departamento}`);
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/ubicacion/municipios/${datos.id_departamento}`
+        );
         const data = await res.json();
         setMunicipios(data);
       } catch (error) {
@@ -71,10 +91,16 @@ export const usePerfilUsuario = (usuario) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setDatos(prev => ({
+
+    setDatos((prev) => ({
       ...prev,
-      [name]: value,
-      ...(name === "id_departamento" ? { id_municipio: "" } : {})
+      [name]:
+        name === "id_departamento" || name === "id_municipio"
+          ? value === ""               // 👈 si está vacío, dejamos ""
+            ? ""
+            : Number(value)           // 👈 si tiene algo, lo convertimos a número
+          : value,
+      ...(name === "id_departamento" ? { id_municipio: "" } : {}),
     }));
   };
 
