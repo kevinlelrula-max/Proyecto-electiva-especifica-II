@@ -4,6 +4,8 @@ export function calcularTotalesVenta(carrito) {
   }
 
   let subtotal = carrito.reduce((acum, item) => {
+      console.log("Item en carrito:", item); // <- aquí
+
     if (!item) return acum;
 
     // Intentamos obtener un precio
